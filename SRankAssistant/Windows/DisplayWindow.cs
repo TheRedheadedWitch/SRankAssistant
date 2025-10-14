@@ -9,16 +9,7 @@ namespace SRankAssistant;
 
 internal class DisplayWindow : Window, IDisposable
 {
-    public DisplayWindow() : base("S Rank Assistant", ImGuiWindowFlags.NoCollapse)
-    {
-        TitleBarButtons.Add(new()
-        {
-            ShowTooltip = () => ImGui.SetTooltip("Support Redheaded Witch on Ko-fi"),
-            Icon = FontAwesomeIcon.Heart,
-            IconOffset = new Vector2(1, 1),
-            Click = _ => Util.OpenLink("https://ko-fi.com/theredheadedwitch")
-        });
-    }
+    public DisplayWindow() : base("S Rank Assistant", ImGuiWindowFlags.NoCollapse) => TitleBarButtons.Add(new() { ShowTooltip = () => ImGui.SetTooltip("Support Redheaded Witch on Ko-fi"), Icon = FontAwesomeIcon.Heart, IconOffset = new Vector2(1, 1), Click = _ => Util.OpenLink("https://ko-fi.com/theredheadedwitch") });
 
     public override void Draw()
     {
@@ -74,7 +65,7 @@ internal class DisplayWindow : Window, IDisposable
                 case SRankConditionType.Discard:
                     if (condition.Targets.Count == 0) break;
                     (uint goal, uint target) discardCondition = condition.Targets.First();
-                    uint currentDiscard = Globals.tracker.GetCount(discardCondition.target);
+                    uint currentDiscard = Globals.tracker.GetDiscardCount(); // <--- use this
                     string itemName = Globals.AllItems.TryGetValue(discardCondition.target, out string? name) ? name : $"Unknown Item ({discardCondition.target})";
                     ImGui.Text($"Discard {itemName}: {currentDiscard} / {discardCondition.goal}");
                     if (ImGui.Button("Reset Zone Progress"))

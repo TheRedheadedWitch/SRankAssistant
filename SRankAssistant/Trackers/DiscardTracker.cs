@@ -11,8 +11,10 @@ public static class DiscardTracker
 
     private static void OnChatMessage(XivChatType type, int timestamp, ref SeString sender, ref SeString message, ref bool isHandled)
     {
-        if (type == XivChatType.SystemMessage)
-            if (message.TextValue.StartsWith("You discard"))
-                LOG.Info($"[LOG] Item Discarded: {message.TextValue}");
+        SRankCondition? condition = SRankData.GetCondition();
+        if (type != XivChatType.SystemMessage || condition == null || condition.Type != SRankConditionType.Discard) return;
+        string mess = message.ToString().ToLower();
+        if (mess.StartsWith("you discard") || mess.StartsWith("you throw away"))
+            Globals.tracker.IncrementDiscard();
     }
 }

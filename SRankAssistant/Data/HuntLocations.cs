@@ -39,8 +39,8 @@ internal class HuntLocations
         (620, "The Peaks", "Bone Crawler", "Chance - Using Chocobo Porter"),
         (621, "The Lochs", "Salt and Light", "Discard - Any 50 individual items"),
         (613, "The Ruby Sea", "Okina", "Kill - 100 Yumemu, 100 Naked Yumemi"),
-        (615, "The Azim Steppe", "Orghana", "Chance, Fate - Suceed at Not Just a Tribute, travel over spawn spot"),
-        (622, "Yanxia", "Gamma", "Chance - travel over spawn spot with Toy Alexander minion out"),
+        (622, "The Azim Steppe", "Orghana", "Chance, Fate - Suceed at Not Just a Tribute, travel over spawn spot"),
+        (614, "Yanxia", "Gamma", "Chance - travel over spawn spot with Toy Alexander minion out"),
 
         // Shadowbringers (ShB)
         (813, "Lakeland", "Tyger", "Discard - Rai Tenderloin"),

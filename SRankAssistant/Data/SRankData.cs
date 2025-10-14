@@ -44,20 +44,3 @@ internal static class SRankData
 
     internal static bool IsZone() => Zones.ContainsKey(SERVICES.ClientState.TerritoryType);
 }
-
-/*
-*     internal static readonly Dictionary<uint, SRankCondition> Zones = new()
-{
-    { 147, new SRankCondition(SRankConditionType.Killing, new[] { (100u, "Earth Sprite") }) },
-    { 613, new SRankCondition(SRankConditionType.Killing, new[] { (100u, "Yumemi"), (100u, "Naked Yumemi") }) },
-    { 814, new SRankCondition(SRankConditionType.Gathering, new[] { (50u, "Dwarven Cotton Boll") }) },
-    { 400, new SRankCondition(SRankConditionType.Gathering, new[] { (50u, "Aurum Regis ore"), (50u, "Seventh Heaven") }) },
-    { 402, new SRankCondition(SRankConditionType.Killing, new[] { (50u, "Allagan Chimera"), (50u, "Lesser Hydra"), (50u, "Meracydian Vouivre") }) },
-    { 817, new SRankCondition(SRankConditionType.Killing, new[] { (100u, "Cracked Ronkan Doll"), (100u, "Cracked Ronkan Thorn"), (100u, "Cracked Ronkan Vessel")}) },
-    { 612, new SRankCondition(SRankConditionType.Killing, new[] { (100u, "Leshy"), (100u, "Diakka") }) },
-    { 957, new SRankCondition(SRankConditionType.Killing, new[] { (100u, "Asvattha"), (100u, "Pisaca"), (100u, "Vajralangula") }) },
-    { 959, new SRankCondition(SRankConditionType.Killing, new[] { (100u, "Thinkers"), (100u, "Wanderers"), (100u, "Weepers") }) },
-    { 146, new SRankCondition(SRankConditionType.FateTimer, new[] { (3600u, string.Empty) }) },
-    { 398, new SRankCondition(SRankConditionType.Fate, new[] { (5u, "Cerf's Up") }) }, // Fate ID 831
-};
-*/

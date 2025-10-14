@@ -37,7 +37,6 @@ public sealed class SRankAssistant : IDalamudPlugin
         SERVICES.CommandManager.AddHandler("/sranktracker", new CommandInfo(OnSRankTracker) { HelpMessage = "/sranktracker on|off|true|false|yes|no {Enables or Disables the plugin}" });
     }
 
-
     public void Dispose()
     {
         SERVICES.CommandManager.RemoveHandler("/sranktracker");
