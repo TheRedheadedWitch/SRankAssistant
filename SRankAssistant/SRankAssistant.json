@@ -1,0 +1,16 @@
+{
+  "Author": "The Redheaded Witch",
+  "Name": "S Rank Assistant",
+  "Punchline": "I admit, I spent hours coding so I could be lazy! Wouldn't you?'",
+  "Description": "Auto counter for S Rank Summoning! Counts kills, gathering attempts, and even discarding items.",
+  "ApplicableVersion": "any",
+  "Tags": [ "Hunt", "Utility" ],
+  "CategoryTags": [ "Utility", "UI" ],
+  "InternalName": "SRankAssist",
+  "AssemblyVersion": "1.0.0",
+  "RepoUrl": "https://github.com/TheRedheadedWitch/SRankAssistant",
+  "DownloadLinkInstall": "https://github.com/TheRedheadedWitch/SRankAssistant/releases/download/v0.0.1/SRankAssist.zip",
+  "DownloadLinkTesting": "https://github.com/TheRedheadedWitch/SRankAssistant/releases/download/v0.0.1/SRankAssist.zip",
+  "DownloadLinkUpdate": "https://github.com/TheRedheadedWitch/SRankAssistant/releases/download/v0.0.1/SRankAssist.zip",
+  "IconUrl": "https://github.com/TheRedheadedWitch/FashionReport/raw/main/FashionReport/images/icon.png"
+}

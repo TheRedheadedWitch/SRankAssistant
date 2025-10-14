@@ -1,0 +1,14 @@
+﻿<Project Sdk="Dalamud.NET.Sdk/13.1.0">
+	<PropertyGroup>
+		<TargetFramework>net9.0-windows7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Version>1.0.0</Version>
+		<Description>S Rank Assistant</Description>
+		<IsPackable>false</IsPackable>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="SRankAssistant.json" />
+	</ItemGroup>
+</Project>
