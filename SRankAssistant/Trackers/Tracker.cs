@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 
-
 namespace SRankAssistant;
 
 internal sealed class Tracker : IPluginConfiguration
@@ -54,11 +53,30 @@ internal sealed class Tracker : IPluginConfiguration
         Save();
     }
 
-    public void IncrementDiscard()
+    public void ResetFates()
     {
-        DiscardCount++;
+        SRankCondition? condition = SRankData.GetCondition();
+        uint instance = SERVICES.ClientState.Instance;
+        uint territory = SERVICES.ClientState.TerritoryType;
+        if (InstancedFateSuccessTimes.TryGetValue(instance, out Dictionary<uint, Dictionary<uint, DateTime>>? fateInstanceDict))
+        {
+            fateInstanceDict.Remove(territory);
+            if (fateInstanceDict.Count == 0) InstancedFateSuccessTimes.Remove(instance);
+        }
+        if (condition != null && condition.Type == SRankConditionType.Fate && condition.Targets.Count > 0)
+            if (InstancedKillGatherCounts.TryGetValue(instance, out Dictionary<uint, Dictionary<uint, uint>>? killInstanceDict) && killInstanceDict.TryGetValue(territory, out Dictionary<uint, uint>? zoneDict))
+            {
+                foreach ((uint goal, uint target) in condition.Targets)
+                    if (zoneDict.ContainsKey(target))
+                        zoneDict.Remove(target);
+                if (zoneDict.Count == 0) killInstanceDict.Remove(territory);
+                if (killInstanceDict.Count == 0) InstancedKillGatherCounts.Remove(instance);
+            }
         Save();
     }
 
+
+    public void ResetDiscards() { DiscardCount = 0; Save(); }
+    public void IncrementDiscard() { DiscardCount++; Save(); }
     public uint GetDiscardCount() => DiscardCount;
 }

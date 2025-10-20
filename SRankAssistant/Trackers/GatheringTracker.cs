@@ -17,14 +17,12 @@ internal static class GatheringTracker
         SRankCondition? condition = SRankData.GetCondition();
         if (condition == null || condition.Type != SRankConditionType.Gathering) return;
         if (data.Item.ContainerType.ToString() is "Inventory1" or "Inventory2" or "Inventory3" or "Inventory4")
-        {
             foreach ((uint goal, uint targetId) in condition.Targets)
                 if (data.Item.ItemId == targetId)
                 {
                     Globals.tracker.Increment(targetId);
                     break;
                 }
-        }
     }
 
     internal static void Dispose()

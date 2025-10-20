@@ -3,7 +3,7 @@
 internal class HuntLocations
 {
     internal static readonly List<(uint id, string zoneName, string sRankName, string condition)> HuntInformation = new()
-{
+    {
         // A Realm Reborn (ARR)
         (134, "Middle La Noscea", "Croque-mitaine", "Chance - Mining Grade 3 La Noscean Topsoil"),
         (135, "Lower La Noscea", "Croakadile", "Travel over spawn location during nights of a full moon"),

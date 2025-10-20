@@ -2,8 +2,8 @@
 using Dalamud.Interface;
 using Dalamud.Interface.Windowing;
 using Dalamud.Utility;
+using Lumina.Excel.Sheets;
 using System.Numerics;
-
 
 namespace SRankAssistant;
 
@@ -36,6 +36,7 @@ internal class DisplayWindow : Window, IDisposable
                     if (ImGui.Button("Reset Zone Progress"))
                         Globals.tracker.ResetZone();
                     break;
+
                 case SRankConditionType.Fate:
                     if (condition.Targets.Count == 0) break;
                     foreach ((uint goal, uint target) in condition.Targets)
@@ -45,7 +46,10 @@ internal class DisplayWindow : Window, IDisposable
                         FateTracker.FateStatus? status = FateTracker.GetStatusForTarget((ushort)target);
                         ImGui.Text($"{fateName}: {current} / {goal}");
                     }
+                    if (ImGui.Button("Reset FATE Progress"))
+                        Globals.tracker.ResetFates();
                     break;
+
                 case SRankConditionType.FateTimer:
                     TimeSpan? elapsed = FateFailureTracker.TimeSinceFailureOrEntry();
                     if (elapsed == null)
@@ -62,14 +66,15 @@ internal class DisplayWindow : Window, IDisposable
                         }
                     }
                     break;
+
                 case SRankConditionType.Discard:
                     if (condition.Targets.Count == 0) break;
                     (uint goal, uint target) discardCondition = condition.Targets.First();
-                    uint currentDiscard = Globals.tracker.GetDiscardCount(); // <--- use this
+                    uint currentDiscard = Globals.tracker.GetDiscardCount();
                     string itemName = Globals.AllItems.TryGetValue(discardCondition.target, out string? name) ? name : $"Unknown Item ({discardCondition.target})";
                     ImGui.Text($"Discard {itemName}: {currentDiscard} / {discardCondition.goal}");
-                    if (ImGui.Button("Reset Zone Progress"))
-                        Globals.tracker.ResetZone();
+                    if (ImGui.Button("Reset Discard Progress"))
+                        Globals.tracker.ResetDiscards();
                     break;
             }
             ImGui.Separator();
