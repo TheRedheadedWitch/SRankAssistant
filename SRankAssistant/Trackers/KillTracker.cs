@@ -1,15 +1,12 @@
-﻿using Dalamud.Game.ClientState.Objects.Enums;
-using Dalamud.Game.ClientState.Objects.Types;
+﻿using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
 using Lumina.Excel.Sheets;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SRankAssistant;
 
 internal struct TrackedNpcData
 {
-    public uint DataId;
+    public uint NameId;
     public string Name;
     public bool IsDeadAndCounted;
 }
@@ -26,31 +23,28 @@ internal static class KillTracker
     {
         SRankCondition? condition = SRankData.GetCondition();
         if (condition == null || condition.Type != SRankConditionType.Killing) return;
-        HashSet<uint> currentObjects = new();
-        foreach (IGameObject obj in SERVICES.Objects)
+        HashSet<uint> currentNameIds = new();
+        foreach (IBattleNpc monster in SERVICES.Objects.OfType<IBattleNpc>())
         {
-            if (obj.ObjectKind != ObjectKind.BattleNpc && obj.ObjectKind != ObjectKind.EventNpc) continue;
-            if (obj is not IBattleChara monster) continue;
-            if (monster.BaseId == 0 || obj.EntityId == 0) continue;
-            currentObjects.Add(obj.EntityId);
-            string monsterName = MonsterNames.TryGetValue(monster.NameId, out string? name) ? name : monster.Name.TextValue;
-            if (!TrackedNpcs.ContainsKey(obj.EntityId))
-                TrackedNpcs[obj.EntityId] = new TrackedNpcData { DataId = monster.BaseId, Name = monsterName, IsDeadAndCounted = false };
-            else if (monster.CurrentHp == 0 && !TrackedNpcs[obj.EntityId].IsDeadAndCounted)
+            if (monster.NameId == 0) continue;
+            currentNameIds.Add(monster.NameId);
+            string name = MonsterNames.TryGetValue(monster.NameId, out string? n) ? n : monster.Name.TextValue;
+            if (!TrackedNpcs.ContainsKey(monster.NameId))
+                TrackedNpcs[monster.NameId] = new TrackedNpcData { NameId = monster.NameId, Name = name, IsDeadAndCounted = false };
+            else if (monster.CurrentHp == 0 && !TrackedNpcs[monster.NameId].IsDeadAndCounted)
             {
-                TrackedNpcData npcData = TrackedNpcs[obj.EntityId];
-                LOG.Debug($"KILLED MONSTER - ID: {npcData.DataId}, Name: {npcData.Name}, Zone: {SERVICES.ClientState.TerritoryType}");
+                TrackedNpcData npcData = TrackedNpcs[monster.NameId];
+                LOG.Debug($"KILLED MONSTER - NameId: {npcData.NameId}, Name: {npcData.Name}, Zone: {SERVICES.ClientState.TerritoryType}");
                 foreach ((uint goal, uint targetId) in condition.Targets)
-                    if (npcData.DataId == targetId)
+                    if (npcData.NameId == targetId)
                     {
                         Globals.tracker.Increment(targetId);
                         break;
                     }
-                TrackedNpcs[obj.EntityId] = new TrackedNpcData { DataId = npcData.DataId, Name = npcData.Name, IsDeadAndCounted = true };
+                TrackedNpcs[monster.NameId] = new TrackedNpcData { NameId = npcData.NameId, Name = npcData.Name, IsDeadAndCounted = true };
             }
         }
-        List<uint> deadObjects = TrackedNpcs.Keys.Except(currentObjects).ToList();
-        foreach (uint deadId in deadObjects)
-            TrackedNpcs.Remove(deadId);
+        List<uint> missing = TrackedNpcs.Keys.Except(currentNameIds).ToList();
+        foreach (uint id in missing) TrackedNpcs.Remove(id);
     }
 }

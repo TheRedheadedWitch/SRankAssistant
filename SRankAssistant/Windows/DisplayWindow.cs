@@ -3,6 +3,7 @@ using Dalamud.Interface;
 using Dalamud.Interface.Windowing;
 using Dalamud.Utility;
 using Lumina.Excel.Sheets;
+using System.Globalization;
 using System.Numerics;
 
 namespace SRankAssistant;
@@ -30,7 +31,7 @@ internal class DisplayWindow : Window, IDisposable
                     foreach ((uint goal, uint target) in condition.Targets)
                     {
                         uint current = Globals.tracker.GetCount(target);
-                        string targetName = condition.Type == SRankConditionType.Killing ? KillTracker.MonsterNames.TryGetValue(target, out string? mobName) ? mobName : $"Unknown ({target})" : Globals.AllItems.TryGetValue(target, out string? itemName2) ? itemName2 : $"Unknown ({target})";
+                        string targetName = condition.Type == SRankConditionType.Killing ? KillTracker.MonsterNames.TryGetValue(target, out string? mobName) ? ToTitleCase(mobName) : $"Unknown ({target})" : Globals.AllItems.TryGetValue(target, out string? itemName2) ? itemName2 : $"Unknown ({target})";
                         ImGui.Text($"{targetName}: {current} / {goal}");
                     }
                     if (ImGui.Button("Reset Zone Progress"))
@@ -82,5 +83,6 @@ internal class DisplayWindow : Window, IDisposable
         ImGui.TextWrapped($"{HuntLocations.GetCondition()}");
     }
 
+    internal static string ToTitleCase(string name) => CultureInfo.InvariantCulture.TextInfo.ToTitleCase(name.ToLowerInvariant());
     public void Dispose() { }
 }

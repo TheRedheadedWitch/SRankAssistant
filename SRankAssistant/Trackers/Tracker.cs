@@ -75,7 +75,6 @@ internal sealed class Tracker : IPluginConfiguration
         Save();
     }
 
-
     public void ResetDiscards() { DiscardCount = 0; Save(); }
     public void IncrementDiscard() { DiscardCount++; Save(); }
     public uint GetDiscardCount() => DiscardCount;
