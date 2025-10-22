@@ -10,7 +10,7 @@
   "DownloadLinkInstall": "https://github.com/TheRedheadedWitch/SRankAssistant/releases/download/v0.0.1/SRankAssist.zip",
   "DownloadLinkTesting": "https://github.com/TheRedheadedWitch/SRankAssistant/releases/download/v0.0.1/SRankAssist.zip",
   "DownloadLinkUpdate": "https://github.com/TheRedheadedWitch/SRankAssistant/releases/download/v0.0.1/SRankAssist.zip",
-  "IconUrl": "https://github.com/TheRedheadedWitch/FashionReport/raw/main/FashionReport/images/icon.png",
+  "IconUrl": "https://raw.githubusercontent.com/TheRedheadedWitch/SRankAssistant/master/SRankAssistant/images/icon.png",
   "ApplicableVersion": "any",
   "AssemblyVersion": "1.0.0",
   "DalamudApiLevel": "13",
