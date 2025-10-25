@@ -3,6 +3,7 @@ using Dalamud.Interface;
 using Dalamud.Interface.Windowing;
 using Dalamud.Utility;
 using Lumina.Excel.Sheets;
+using SRankAssistant.Trackers;
 using System.Globalization;
 using System.Numerics;
 
@@ -23,7 +24,7 @@ internal class DisplayWindow : Window, IDisposable
         ImGui.Separator();
         if (condition != null)
         {
-            ImGui.Text($"Type: {condition.Type}");
+            ImGui.Text($"Type: {(condition.Type == SRankConditionType.Wee ? SRankConditionType.Minion.ToString() : condition.Type)}");
             switch (condition.Type)
             {
                 case SRankConditionType.Killing:
@@ -76,6 +77,44 @@ internal class DisplayWindow : Window, IDisposable
                     ImGui.Text($"Discard {itemName}: {currentDiscard} / {discardCondition.goal}");
                     if (ImGui.Button("Reset Discard Progress"))
                         Globals.tracker.ResetDiscards();
+                    break;
+
+                case SRankConditionType.Wee:
+                    if (condition.Targets.Count == 0) break;
+                    foreach ((uint nameId, uint goal) in condition.Targets)
+                    {
+                        uint current = WeeTracker.GetCurrentCount(nameId); // Get real-time count
+                        ImGui.Text($"Wee Ea minions spotted: {current} / {goal}");
+                    }
+                    break;
+
+                case SRankConditionType.Minion:
+                    if (condition.Targets.Count == 0) break;
+                    foreach ((uint count, uint minionNameId) in condition.Targets)
+                    {
+                        bool hasCorrectMinion = MinionTracker.HasCorrectMinionSummoned(minionNameId);
+                        uint lastSummoned = MinionTracker.GetLastSummonedMinionId();
+
+                        string targetMinionName = MinionTracker.GetMinionName(minionNameId);
+
+                        if (lastSummoned > 0)
+                        {
+                            string currentMinionName = MinionTracker.GetMinionName(lastSummoned);
+
+                            if (hasCorrectMinion)
+                                ImGui.TextColored(new Vector4(0, 1, 0, 1), $"Minion Out: {ToTitleCase(currentMinionName)}");
+                            else
+                                ImGui.Text($"Minion Out: {currentMinionName}");
+
+                            if (!hasCorrectMinion)
+                                ImGui.TextColored(new Vector4(1, 0.5f, 0, 1), $"Need: {ToTitleCase(targetMinionName)}");
+                        }
+                        else
+                        {
+                            ImGui.Text($"Minion Out: ");
+                            ImGui.TextColored(new Vector4(1, 0.5f, 0, 1), $"Need: {ToTitleCase(targetMinionName)}");
+                        }
+                    }
                     break;
             }
             ImGui.Separator();

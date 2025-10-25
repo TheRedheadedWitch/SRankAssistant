@@ -7,6 +7,8 @@ internal enum SRankConditionType
     Fate,
     FateTimer,
     Discard,
+    Minion,
+    Wee,
 }
 
 internal sealed class SRankCondition
@@ -38,6 +40,12 @@ internal static class SRankData
         { 398u, new SRankCondition(SRankConditionType.Fate, new[] { (5u, 831u) }) },
         { 1190u, new SRankCondition(SRankConditionType.Fate, new[] { (3u, 1862u) }) },
         { 621u, new SRankCondition(SRankConditionType.Discard, new[] { (50u, 0u) }) },
+        { 960u, new SRankCondition(SRankConditionType.Wee, new[] { (423u, 10u)} ) },
+        { 614u, new SRankCondition(SRankConditionType.Minion, new[] { (1u, 215u)} ) },
+        { 397u, new SRankCondition(SRankConditionType.Minion, new[] { (1u, 148u)} ) },
+        { 816u, new SRankCondition(SRankConditionType.Minion, new[] { (1u, 303u)} ) },
+        { 956u, new SRankCondition(SRankConditionType.Minion, new[] { (1u, 434u)} ) },
+        { 1188u, new SRankCondition(SRankConditionType.Minion, new[] { (1u, 180u)} ) },
     };
 
     internal static SRankCondition? GetCondition() => Zones.TryGetValue(SERVICES.ClientState.TerritoryType, out SRankCondition? condition) ? condition : null;

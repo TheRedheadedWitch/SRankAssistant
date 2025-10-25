@@ -3,6 +3,7 @@ using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 using Lumina.Excel;
 using Lumina.Excel.Sheets;
+using SRankAssistant.Trackers;
 
 namespace SRankAssistant;
 
@@ -33,6 +34,8 @@ public sealed class SRankAssistant : IDalamudPlugin
         KillTracker.Initialize();
         GatheringTracker.Initialize();
         DiscardTracker.Initialize();
+        WeeTracker.Initialize();
+        MinionTracker.Initialize();
         Globals.tracker = Tracker.Load();
         SERVICES.CommandManager.AddHandler("/sranktracker", new CommandInfo(OnSRankTracker) { HelpMessage = "/sranktracker on|off|true|false|yes|no {Enables or Disables the plugin}" });
     }
@@ -48,6 +51,8 @@ public sealed class SRankAssistant : IDalamudPlugin
         KillTracker.Dispose();
         GatheringTracker.Dispose();
         DiscardTracker.Dispose();
+        WeeTracker.Dispose();
+        MinionTracker.Dispose();
         WindowSystem.RemoveAllWindows();
     }
 
